@@ -1,0 +1,5 @@
+architect:
+  - kerelape
+release:
+  script: |
+    git commit -am "$tag"
