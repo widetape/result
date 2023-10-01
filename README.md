@@ -3,6 +3,12 @@
 Result is a Go library that only provides a simple `Result` object, that
 is intended to replace conventional value-error pair returning.
 
+## Motivation
+
+It is too easy to bypass error checking, which can lead to a nil reference panic
+or even worse to an undefined behaviour when the result of a function
+is returned by value, rather than a reference.
+
 ## Usage
 
 Conceptually, there are two conditions of a result: fake and real.
