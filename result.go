@@ -54,6 +54,14 @@ func Real[T any](value T) Result[T] {
 	}
 }
 
+// Of wraps (T, error) return result into a Result.
+func Of[T any](value T, err error) Result[T] {
+	if err != nil {
+		return Fake[T](err)
+	}
+	return Real(value)
+}
+
 // Error returns the error of the Result, or nil if the Result is "real".
 func (r *Result[_]) Error() error {
 	return r.err
