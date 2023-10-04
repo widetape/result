@@ -35,4 +35,27 @@ func TestResult(t *testing.T) {
 			assert.Panics(t, func() { r.Value() }, "expected fake result to panic")
 		})
 	})
+	t.Run("Of", func(t *testing.T) {
+		alwaysErr := func() (int, error) {
+			return 0, errors.New("err")
+		}
+		neverErr := func() (int, error) {
+			return 50, nil
+		}
+		t.Run("wraps error correctly", func(t *testing.T) {
+			r := result.Of(alwaysErr())
+			assert.NotNil(t, r.Error(), "expected to get an error")
+			assert.Panics(
+				t,
+				func() {
+					r.Value()
+				},
+			)
+		})
+		t.Run("wraps value correctly", func(t *testing.T) {
+			r := result.Of(neverErr())
+			assert.Nil(t, r.Error(), "did not expect an error")
+			assert.Equal(t, 50, r.Value(), "the value is not correct")
+		})
+	})
 }
